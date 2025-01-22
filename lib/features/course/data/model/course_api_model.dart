@@ -45,6 +45,9 @@ class CourseApiModel extends Equatable {
     );
   }
 
+  static List<CourseEntity> toEntityList(List<CourseApiModel> models) =>
+      models.map((model) => model.toEntity()).toList();
+
   @override
   // TODO: implement props
   List<Object?> get props => throw UnimplementedError();

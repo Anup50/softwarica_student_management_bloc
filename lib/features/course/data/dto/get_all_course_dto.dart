@@ -14,4 +14,8 @@ class GetAllCourseDTO {
     required this.count,
     required this.data,
   });
+  Map<String, dynamic> toJson() => _$GetAllCourseDTOToJson(this);
+
+  factory GetAllCourseDTO.fromJson(Map<String, dynamic> json) =>
+      _$GetAllCourseDTOFromJson(json);
 }

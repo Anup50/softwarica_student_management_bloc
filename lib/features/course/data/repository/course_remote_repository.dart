@@ -30,7 +30,7 @@ class CourseRemoteRepository implements ICourseRepository {
   }
 
   @override
-  Future<Either<Failure, List<CourseEntity>>> getCourses() {
+  Future<Either<Failure, List<CourseEntity>>> getCourses() async {
     try {
       return remoteDataSource.getCourses().then(
         (value) {
