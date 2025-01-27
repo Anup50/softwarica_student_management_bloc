@@ -15,7 +15,7 @@ class ApiEndpoints {
   // ==================== Course Routes ====================
   static const String createCourse = "course/createCourse";
   static const String getAllCourse = "course/getAllCourse";
-  static const String deleteCourse = "course/deleteCourse";
+  static const String deleteCourse = "course/";
   // ==================== Auth Routes ====================
   static const String login = "auth/login";
   static const String register = "auth/register";

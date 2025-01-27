@@ -24,9 +24,17 @@ class CourseRemoteRepository implements ICourseRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteCourse(String id) {
-    // TODO: implement deleteCourse
-    throw UnimplementedError();
+  Future<Either<Failure, void>> deleteCourse(String id) async {
+    try {
+      remoteDataSource.deleteCourse(id);
+      return Future.value(Right(null));
+    } catch (e) {
+      return Left(
+        ApiFailure(
+          message: e.toString(),
+        ),
+      );
+    }
   }
 
   @override
