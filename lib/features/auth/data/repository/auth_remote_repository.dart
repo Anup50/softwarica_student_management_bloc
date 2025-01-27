@@ -18,9 +18,15 @@ class AuthRemoteRepository implements IAuthRepository {
 
   @override
   Future<Either<Failure, String>> loginStudent(
-      String username, String password) {
-    // TODO: implement loginStudent
-    throw UnimplementedError();
+    String email,
+    String password,
+  ) async {
+    try {
+      final token = await _authRemoteDataSource.loginStudent(email, password);
+      return Right(token);
+    } catch (e) {
+      return Left(LocalDatabaseFailure(message: e.toString()));
+    }
   }
 
   @override

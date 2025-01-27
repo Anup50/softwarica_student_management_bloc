@@ -10,10 +10,12 @@ class ApiEndpoints {
   // ==================== Batch Routes ====================
   static const String createBatch = "batch/createBatch";
   static const String getAllBatch = "batch/getAllBatches";
+  static const String deleteBatch = "batch/";
 
   // ==================== Course Routes ====================
   static const String createCourse = "course/createCourse";
   static const String getAllCourse = "course/getAllCourse";
+  static const String deleteCourse = "course/deleteCourse";
   // ==================== Auth Routes ====================
   static const String login = "auth/login";
   static const String register = "auth/register";
