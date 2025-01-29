@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:softwarica_student_management_bloc/app/usecase/usecase.dart';
@@ -6,6 +8,25 @@ import 'package:softwarica_student_management_bloc/features/auth/domain/entity/a
 import 'package:softwarica_student_management_bloc/features/auth/domain/repository/auth_repository.dart';
 import 'package:softwarica_student_management_bloc/features/batch/domain/entity/batch_entity.dart';
 import 'package:softwarica_student_management_bloc/features/course/domain/entity/course_entity.dart';
+
+class UploadImageParams {
+  final File file;
+  const UploadImageParams({
+    required this.file,
+  });
+}
+
+class UploadImageUsecase
+    implements UsecaseWithParams<String, UploadImageParams> {
+  final IAuthRepository _repository;
+
+  UploadImageUsecase(this._repository);
+
+  @override
+  Future<Either<Failure, String>> call(UploadImageParams params) {
+    return _repository.uploadProfilePicture(params.file);
+  }
+}
 
 class RegisterUserParams extends Equatable {
   final String fname;

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -15,17 +17,21 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final BatchBloc _batchBloc;
   final CourseBloc _courseBloc;
   final RegisterUseCase _registerUseCase;
+  final UploadImageUsecase _uploadImageUsecase;
 
   RegisterBloc({
     required BatchBloc batchBloc,
     required CourseBloc courseBloc,
     required RegisterUseCase registerUseCase,
+    required UploadImageUsecase uploadImageUsecase,
   })  : _batchBloc = batchBloc,
         _courseBloc = courseBloc,
         _registerUseCase = registerUseCase,
+        _uploadImageUsecase = uploadImageUsecase,
         super(RegisterState.initial()) {
     on<LoadCoursesAndBatches>(_onLoadCoursesAndBatches);
     on<RegisterStudent>(_onRegisterEvent);
+    on<LoadImage>(_onLoadImage);
 
     add(LoadCoursesAndBatches());
   }
@@ -38,6 +44,21 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     _batchBloc.add(LoadBatches());
     _courseBloc.add(CourseLoad());
     emit(state.copyWith(isLoading: false, isSuccess: true));
+  }
+
+  void _onLoadImage(
+    LoadImage event,
+    Emitter<RegisterState> emit,
+  ) async {
+    emit(state.copyWith(isLoading: true));
+    final result = await _uploadImageUsecase.call(UploadImageParams(
+      file: event.file,
+    ));
+
+    result.fold((l) => emit(state.copyWith(isLoading: false, isSuccess: false)),
+        (r) {
+      emit(state.copyWith(isLoading: false, isSuccess: true, imageName: r));
+    });
   }
 
   void _onRegisterEvent(
