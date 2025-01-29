@@ -28,8 +28,8 @@ class AuthRemoteDataSource implements IAuthDataSource {
       );
 
       if (response.statusCode == 200) {
-        final token = response.data['token'] as String;
-        return token;
+        final str = response.data['token'];
+        return str;
       } else {
         throw Exception(response.statusMessage ?? "Login failed");
       }

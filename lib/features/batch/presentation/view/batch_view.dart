@@ -66,9 +66,33 @@ class BatchView extends StatelessWidget {
                           trailing: IconButton(
                             icon: Icon(Icons.delete),
                             onPressed: () {
-                              context.read<BatchBloc>().add(
-                                    DeleteBatch(state.batches[index].batchId!),
-                                  );
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context2) {
+                                    return AlertDialog(
+                                      title: Text('Delete Batch'),
+                                      content: Text(
+                                          'Are you sure you want to delete ${state.batches[index].batchName} batch?'),
+                                      actions: [
+                                        TextButton(
+                                          child: Text('Cancel'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: Text('Delete'),
+                                          onPressed: () {
+                                            context.read<BatchBloc>().add(
+                                                  DeleteBatch(state
+                                                      .batches[index].batchId!),
+                                                );
+                                            Navigator.of(context).pop();
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  });
                             },
                           ),
                         );
